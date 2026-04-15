@@ -52,9 +52,41 @@ python run.py
 
 ---
 
-The Flask API will run on http://127.0.0.1:5000. The SQLite database (trade_recon.db) is automatically initialized on the first run.2. Start the Frontend (UI)Open a second terminal in the root directory and run:Bashcd frontend
+The Flask API will run on http://127.0.0.1:5000. The SQLite database is automatically initialized.
+
+2. Start the Frontend (UI)
+Open a second terminal in the root directory:
+
+Bash
+cd frontend
 npm install
 npm run dev
-The React application will run on http://localhost:5173. Open this URL in your browser to view the reporting dashboard and trigger a reconciliation run.🧪 How to Run the TestsThe backend includes a comprehensive Pytest suite covering data ingestion (error handling), reconciliation logic (verifying exact counts of matches/breaks), and API endpoints.With your backend virtual environment activated, run the tests with a single command:Bashpython -m pytest backend/tests/ -v
-(Note: The test suite uses an isolated, in-memory SQLite database via conftest.py to ensure tests are fast and do not corrupt your local data).📡 API Endpoints & Sample RequestsA test_requests.http file is included in the repository root to demonstrate the full API flow. If you use the VS Code REST Client extension, you can trigger these directly.Alternatively, you can test the endpoints manually once the backend is running:POST /reconciliation/run - Triggers ingestion and reconciliation.GET /reconciliation/runs - Lists all past runs.GET /reconciliation/runs/{run_id}/summary - Gets matched/break/missing counts.GET /reconciliation/runs/{run_id}/breaks - Gets all discrepancies.GET /reconciliation/runs/{run_id}/breaks?field=price - Filters breaks by a specific field.🤔 Assumptions MadeAmbiguity in "Missing" Definitions: I assumed MISSING_INTERNAL means the trade was found in the external file but not the internal file, and MISSING_EXTERNAL means it was found in the internal file but not the external file.Malformed Data Handling: If a row is missing a critical numeric field (like price or quantity), or contains unparseable data, I assumed it should not default to 0. Instead, the ingestion engine logs a warning and skips the row entirely, continuing with the rest of the file.Reconciliation Engine Execution: Given the required scale (50-100 rows), I assumed performing the comparison in-memory using Python dictionaries was the optimal approach for readability and speed.⚠️ Known Limitations & Real-World ScalingWhile this architecture works perfectly for the requested scope, a production environment processing millions of trades under a tight SLA would require the following changes:Asynchronous Processing: Currently, the POST /reconciliation/run endpoint blocks the HTTP thread while reading files and computing breaks. For large datasets, this must be decoupled using a message broker (e.g., RabbitMQ/Kafka) and background workers (e.g., Celery).Database Migration: Moving from SQLite to a robust RDBMS like PostgreSQL.Database-Level Reconciliation: Instead of pulling millions of rows into application memory, the comparison engine would be rewritten to leverage native SQL JOINs and CASE statements, executing the logic entirely within the database layer for maximum performance.Batch Ingestion: Data ingestion via pandas would need to be chunked to avoid memory exhaustion during the load phase.
+The React application will run on http://localhost:5173. Open this URL in your browser to trigger a reconciliation run.
+
+🧪 How to Run the Tests
+Below are the instructions on how to run the tests.
+
+With your backend virtual environment activated, run:
+
+Bash
+python -m pytest backend/tests/ -v
+(Note: The test suite uses an isolated, in-memory SQLite database to ensure tests are fast and do not corrupt your local data).
+
+🤔 Assumptions Made
+The following section outlines any assumptions made during development:
+
+Ambiguity in "Missing" Definitions: I assumed MISSING_INTERNAL means the trade was found in the external file but not the internal file, and MISSING_EXTERNAL means it was found in the internal file but not the external file.
+
+Malformed Data Handling: If a row is missing a critical numeric field (like price or quantity), I assumed it should not default to 0. Instead, the ingestion engine logs a warning and skips the row entirely.
+
+Reconciliation Engine Execution: Given the required scale (50-100 rows), I assumed performing the comparison in-memory using Python dictionaries was the optimal approach for readability.
+
+⚠️ Known Limitations
+The following are known limitations and considerations for real-world scaling:
+
+Synchronous Processing: Currently, the run endpoint blocks the HTTP thread while reading files and computing breaks. For large datasets, this must be decoupled using a message broker (e.g., RabbitMQ/Kafka) and background workers (e.g., Celery).
+
+Database Migration: Moving from SQLite to a robust RDBMS like PostgreSQL is necessary for production environments.
+
+Database-Level Reconciliation: Instead of pulling rows into application memory, the comparison engine would need to be rewritten to leverage native SQL JOINs, executing the logic entirely within the database layer for maximum performance.
 ```
