@@ -1,47 +1,32 @@
 # Trade Reconciliation Service
 
-[cite_start]A full-stack web application built to ingest, compare, and report discrepancies between two trade datasets (an internal system and a prime broker's external system)[cite: 25, 31, 32].
+A full-stack web application built to ingest, compare, and report discrepancies between two trade datasets.
 
-## 🛠 Tech Stack
+## 📊 Discrepancy Seeding
 
-- [cite_start]**Backend:** Python, Flask, Pandas (for ingestion), SQLAlchemy.
-- [cite_start]**Database:** SQLite (Requires zero external setup; runs entirely locally)[cite: 22, 72].
-- [cite_start]**Frontend:** React, Vite, Axios[cite: 59, 64].
-- [cite_start]**Testing:** Pytest (utilizing an isolated, in-memory SQLite database).
+[cite_start]As required, this repository documents the exact count of each discrepancy type seeded. Out of a base dataset of 50 trades, I introduced exactly **10 discrepancies**:
 
----
-
-## 📊 Discrepancy Seeding (Test Data)
-
-[cite_start]As requested, I generated a base dataset of 50 trades and introduced specific discrepancies into ~20% of the records[cite: 38]. The reconciliation engine successfully identifies all **10 seeded discrepancies**:
-
-- [cite_start]**Price Mismatches (3):** Trade IDs `5`, `25`, `48` [cite: 39]
-- [cite_start]**Quantity Mismatches (2):** Trade IDs `12`, `40` [cite: 40]
-- [cite_start]**Status Mismatches (3):** Trade IDs `18`, `33`, `45` [cite: 41]
-- [cite_start]**Missing Trades (2):** [cite: 42]
-  - [cite_start]Trade ID `51` (**MISSING_EXTERNAL**: Exists in internal, missing in external) [cite: 54]
-  - Trade ID `52` (**MISSING_INTERNAL**: Exists in external, missing in internal) [cite: 53]
+- [cite_start]**Price Mismatches (3):** Trade IDs `5`, `25`, `48`
+- [cite_start]**Quantity Mismatches (2):** Trade IDs `12`, `40`
+- [cite_start]**Status Mismatches (3):** Trade IDs `18`, `33`, `45`
+- [cite_start]**Missing Trades (2):**
+  - Trade ID `51` (**MISSING_EXTERNAL**: Exists in internal, missing in external)
+  - Trade ID `52` (**MISSING_INTERNAL**: Exists in external, missing in internal)
 
 ---
 
 ## 🚀 How to Run the Service Locally
 
-The application is split into a backend and frontend. [cite_start]You do not need to install any external databases to run this project[cite: 22].
-
-### Prerequisites
-
-- Python 3.9+
-- Node.js 18+
+[cite_start]Below are the instructions detailing how to run the service locally. You will need Python 3.9+ and Node.js 18+.
 
 ### 1. Start the Backend (API & Database)
 
-[cite_start]Open a terminal in the root directory and run the following commands to start the backend from scratch[cite: 23, 113]:
+Open a terminal in the root directory:
 
 ```bash
 cd backend
 python -m venv venv
 
-# Activate the virtual environment:
 # On macOS/Linux:
 source venv/bin/activate
 # On Windows:
