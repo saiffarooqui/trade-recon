@@ -1,0 +1,14 @@
+### Trigger a new run 
+POST http://localhost:5000/reconciliation/run
+
+### List all past runs 
+GET http://localhost:5000/reconciliation/runs
+
+### Get summary for Run ID 1 
+GET http://localhost:5000/reconciliation/runs/1/summary
+
+### Get breaks and missing for Run ID 1 
+GET http://localhost:5000/reconciliation/runs/1/breaks
+
+### Filter breaks by price for Run ID 1 
+GET http://localhost:5000/reconciliation/runs/1/breaks?field=price
