@@ -5,7 +5,7 @@ from app.models import Trade, db
 
 
 def test_ingestion_success_and_error_handling(app, tmp_path):
-    # We create a temporary CSV file with 2 valid rows and 2 malformed rows
+    # create a temporary CSV file with 2 valid rows and 2 malformed rows
     csv_content = """trade_id,instrument,trade_date,settlement_date,direction,quantity,price,currency,counterparty,status
 1,AAPL,2026-04-10,2026-04-12,BUY,100,150.00,USD,JPM,SETTLED
 2,MSFT,2026-04-10,2026-04-12,INVALID_DIR,200,310.50,USD,GS,SETTLED

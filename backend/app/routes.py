@@ -88,7 +88,6 @@ def get_breaks(run_id):
             ReconResult.status.in_(["BREAK", "MISSING_INTERNAL", "MISSING_EXTERNAL"]),
         ).all()
 
-        # To make the UI easier to build later, let's attach the break details to the response
         break_details = BreakDetail.query.filter_by(run_id=run_id).all()
         details_map = {}
         for detail in break_details:

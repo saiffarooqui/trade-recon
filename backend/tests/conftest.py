@@ -15,7 +15,6 @@ def app():
     app = create_app(test_config)
 
     with app.app_context():
-        # Tables are already created in create_app, but we explicitly yield the app
         yield app
 
         # Teardown
