@@ -1,0 +1,143 @@
+{
+	"info": {
+		"_postman_id": "e63254b5-9c63-4cb6-a557-807315029768",
+		"name": "TradeRecon",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23127358"
+	},
+	"item": [
+		{
+			"name": "Trigger Reconciliation Run",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/reconciliation/run",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"reconciliation",
+						"run"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List all past runs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/reconciliation/runs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"reconciliation",
+						"runs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Summary for a Specific Run",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/reconciliation/runs/1/summary",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"reconciliation",
+						"runs",
+						"1",
+						"summary"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Full Recon Results",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/reconciliation/runs/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"reconciliation",
+						"runs",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all breaks and missing Trades",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/reconciliation/runs/1/breaks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"reconciliation",
+						"runs",
+						"1",
+						"breaks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filter Breaks by a Specific Field",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/reconciliation/runs/1/breaks?field=price",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"reconciliation",
+						"runs",
+						"1",
+						"breaks"
+					],
+					"query": [
+						{
+							"key": "field",
+							"value": "price"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
